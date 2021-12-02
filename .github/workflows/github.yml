@@ -23,6 +23,15 @@ jobs:
           tags: |
             ghcr.io/tourcoder/dockerdemo/dockerdemo:latest
           push: ${{ github.ref == 'refs/heads/master' }}
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          script: |
+            sudo docker pull ghcr.io/tourcoder/dockerdemo/dockerdemo:latest
 
 
 
